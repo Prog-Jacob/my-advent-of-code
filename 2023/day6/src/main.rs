@@ -39,5 +39,11 @@ fn main() {
         }
     }
 
-    print!("{}", l2 - l1);
+    print!("{} and {}", l2 - l1, solve_in_o1(k as f64, v as f64));
+}
+
+fn solve_in_o1(total_time: f64, target: f64) -> usize {
+    let lower_bound = (total_time - (total_time * total_time - 4.0 * target).sqrt()) / 2.0;
+    let upper_bound = (total_time + (total_time * total_time - 4.0 * target).sqrt()) / 2.0;
+    upper_bound.floor() as usize - lower_bound.ceil() as usize + 1
 }

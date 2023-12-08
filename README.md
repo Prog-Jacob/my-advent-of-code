@@ -22,3 +22,6 @@
 - [Day 7:](2023/day7/src/main.rs)
     - [x] Silver
     - [x] Gold
+- [Day 8:](2023/day8/src/main.rs)
+    - [x] Silver
+    - [x] Gold

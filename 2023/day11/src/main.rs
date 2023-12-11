@@ -1,10 +1,9 @@
-use std::collections::HashSet;
 use std::io::prelude::*;
 use std::io::stdin;
 
 fn main() {
     const FACTOR: usize = 1000000;
-    let mut rows: HashSet<usize> = HashSet::new();
+    let mut rows: Vec<usize> = Vec::new();
 
     let universe = stdin()
         .lock()
@@ -13,13 +12,13 @@ fn main() {
         .map(|(i, line)| {
             let line = line.unwrap();
             if line.chars().all(|ch| ch == '.') {
-                rows.insert(i);
+                rows.push(i);
             }
             line
         })
         .collect::<Vec<_>>();
 
-    let cols: HashSet<usize> = (0..universe[0].len())
+    let cols: Vec<usize> = (0..universe[0].len())
         .filter(|&i| universe.iter().all(|row| &row[i..i + 1] == "."))
         .collect();
     let mut galaxies: Vec<(usize, usize)> = Vec::new();
@@ -36,11 +35,22 @@ fn main() {
         galaxies.iter().fold(acc, |acc, &(x2, y2)| {
             let (x1, x2) = (x1.min(x2), x1.max(x2));
             let (y1, y2) = (y1.min(y2), y1.max(y2));
-            let (dx, dy) = (x2 - x1, y2 - y1);
-            let empty_rows = (x1..x2).filter(|row| rows.contains(row)).count();
-            let empty_cols = (y1..y2).filter(|col| cols.contains(col)).count();
+            let empty_rows = match rows.binary_search(&x2) {
+                Ok(x) => x,
+                Err(x) => x,
+            } - match rows.binary_search(&x1) {
+                Ok(x) => x,
+                Err(x) => x,
+            };
+            let empty_cols = match cols.binary_search(&y2) {
+                Ok(y) => y,
+                Err(y) => y,
+            } - match cols.binary_search(&y1) {
+                Ok(y) => y,
+                Err(y) => y,
+            };
 
-            acc + dx + dy + (empty_rows * (FACTOR - 1)) + (empty_cols * (FACTOR - 1))
+            acc + x2 - x1 + y2 - y1 + (empty_rows * (FACTOR - 1)) + (empty_cols * (FACTOR - 1))
         })
     });
 

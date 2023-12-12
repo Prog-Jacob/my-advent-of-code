@@ -50,7 +50,7 @@ fn main() {
                 Err(y) => y,
             };
 
-            acc + x2 - x1 + y2 - y1 + (empty_rows * (FACTOR - 1)) + (empty_cols * (FACTOR - 1))
+            acc + (x2 - x1) + (y2 - y1) + (empty_rows + empty_cols) * (FACTOR - 1)
         })
     });
 

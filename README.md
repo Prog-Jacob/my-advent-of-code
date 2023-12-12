@@ -34,3 +34,6 @@
 - [Day 11:](2023/day11/src/main.rs)
     - [x] Silver
     - [x] Gold
+- [Day 12:](2023/day12/src/main.rs)
+    - [x] Silver
+    - [x] Gold

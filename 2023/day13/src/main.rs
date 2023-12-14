@@ -3,17 +3,17 @@ use std::io::stdin;
 
 fn main() {
     let mut ans = 0;
-    let mut patterns: Vec<Vec<String>> = vec![Vec::new()];
+    let mut input = String::new();
+    stdin().read_to_string(&mut input).unwrap();
 
-    for line in stdin().lock().lines() {
-        let line = line.unwrap();
-
-        if line.len() == 0 {
-            patterns.push(Vec::new());
-        } else {
-            patterns.last_mut().unwrap().push(line.clone());
-        }
-    }
+    let patterns = input
+        .split("\n\r\n")
+        .map(|s| {
+            s.split_whitespace()
+                .map(|s| s.to_string())
+                .collect::<Vec<_>>()
+        })
+        .collect::<Vec<_>>();
 
     for pattern in patterns.iter() {
         let transpose: Vec<String> = (0..pattern[0].len())

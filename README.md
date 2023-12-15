@@ -43,3 +43,6 @@
 - [Day 14:](2023/day14/src/main.rs)
     - [x] Silver
     - [x] Gold
+- [Day 15:](2023/day15/src/main.rs)
+    - [x] Silver
+    - [x] Gold

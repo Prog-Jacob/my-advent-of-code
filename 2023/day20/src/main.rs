@@ -47,12 +47,8 @@ fn solve(
         .chain(from.keys())
         .map(|k| (k.to_string(), false))
         .collect();
-    let mut backdoor: HashMap<_, _> = ["tx", "dd", "nz", "ph"]
-        .iter()
-        .map(|s| (s.to_string(), 0))
-        .collect();
+    let mut backdoor: HashMap<_, _> = from.get("ls").unwrap().iter().map(|s| (s, 0)).collect();
 
-    // Consider using a HashSet with Stack to find cycles.
     while i <= 1000 || backdoor.values().any(|&v| v == 0) {
         let (l, h) = dfs("broadcaster", types, &mut vals, to, from, &mut backdoor, i);
         if i <= 1000 {
@@ -75,7 +71,7 @@ fn dfs(
     vals: &mut HashMap<String, bool>,
     to: &HashMap<String, Vec<String>>,
     from: &HashMap<String, Vec<String>>,
-    backdoor: &mut HashMap<String, usize>,
+    backdoor: &mut HashMap<&String, usize>,
     presses: usize,
 ) -> (usize, usize) {
     let mut low = 0;
